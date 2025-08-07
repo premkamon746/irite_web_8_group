@@ -1,0 +1,26 @@
+<div class="card-header flex-column flex-md-row">
+  <div class="head-label text-center">
+    <h5 class="card-title mb-0">รายการรับแจ้งเหตุ</h5>
+  </div>
+  <div class="dt-action-buttons text-end pt-3 pt-md-0">
+    <!-- Action buttons (e.g., export, add new) go here -->
+  </div>
+</div>
+
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tbody>
+            <tr><th>*สภ./สน.</th><td>{{report_number}}</td></tr>
+            <tr><th>*ที่</th><td>{{location}}</td></tr>
+            <tr><th>*พนักงานสอบสวน</th><td>{{report_officer}}</td></tr>
+            <tr><th>*วันที่รับเรื่อง</th><td>{{create_date}}</td></tr>
+            <tr><th>*วัตถุพยานที่นำส่ง</th><td>{{item_name}}</td></tr>
+            <tr><th>จำนวนชิ้น</th><td>{{item_count}}</td></tr>
+            <tr><th>จุดประสงค์</th><td>{{purpose}}</td></tr>
+            <tr><th>*ส่งกลุ่มงานไหนบ้าง</th><td>{{group_send}}</td></tr>
+            <tr><th>*เลขที่หนังสือนำส่ง</th><td>{{document_no}}</td></tr>
+            <tr><th>*เลขรับบก.</th><td>{{receive_no}}</td></tr>
+        </tbody>
+    </table>
+</div>
