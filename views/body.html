@@ -7,20 +7,26 @@
   </div>
 </div>
 
+    <div class="table-responsive">
+      <form id="evidenceForm">
+          <table class="table table-bordered">
+              <tbody>
+                  <tr><th>*สภ./สน.</th><td>{{report_number}}</td></tr>
+                  <tr><th>*ที่</th><td>{{location}}</td></tr>
+                  <tr><th>*พนักงานสอบสวน</th><td>{{report_officer}}</td></tr>
+                  <tr><th>*วันที่รับเรื่อง</th><td>{{create_date}}</td></tr>
+                  <tr><th>*วัตถุพยานที่นำส่ง</th><td>{{evidentList}}</td></tr>
+                  <tr><th>จำนวนชิ้น</th><td>{{evg_count}}</td></tr>
+                  <tr><th>จุดประสงค์</th><td>
+                    <textarea class="form-control" id="exampleTextarea" rows="4" placeholder="Type your message here..."></textarea></td></tr>
+                  <tr><th>*ส่งกลุ่มงานไหนบ้าง</th><td>{{return_psk}}</td></tr>
+                  <tr><th>*เลขที่หนังสือนำส่ง</th><td>{{document_no}}</td></tr>
+                  <tr><th>*เลขรับบก.</th><td>บันทึกเพื่อออกเลข</td></tr>
+              </tbody>
+          </table>
 
-<div class="table-responsive">
-    <table class="table table-bordered">
-        <tbody>
-            <tr><th>*สภ./สน.</th><td>{{report_number}}</td></tr>
-            <tr><th>*ที่</th><td>{{location}}</td></tr>
-            <tr><th>*พนักงานสอบสวน</th><td>{{report_officer}}</td></tr>
-            <tr><th>*วันที่รับเรื่อง</th><td>{{create_date}}</td></tr>
-            <tr><th>*วัตถุพยานที่นำส่ง</th><td>{{item_name}}</td></tr>
-            <tr><th>จำนวนชิ้น</th><td>{{item_count}}</td></tr>
-            <tr><th>จุดประสงค์</th><td>{{purpose}}</td></tr>
-            <tr><th>*ส่งกลุ่มงานไหนบ้าง</th><td>{{group_send}}</td></tr>
-            <tr><th>*เลขที่หนังสือนำส่ง</th><td>{{document_no}}</td></tr>
-            <tr><th>*เลขรับบก.</th><td>{{receive_no}}</td></tr>
-        </tbody>
-    </table>
-</div>
+          <div class="d-flex justify-content-center mt-3">
+            <button type="submit" class="btn btn-primary">บันทึก</button>
+          </div>
+      </form>
+    </div>

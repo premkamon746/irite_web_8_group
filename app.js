@@ -30,22 +30,48 @@ app.get('/sumary_checkin', async (req, res) => {
             WHERE i.uid = ?
         `, [uid]);
 
-        const [incident] = await connection.execute(`
-            SELECT i.report_number, i.report_from_where, i.report_officer, i.create_date
-            FROM eventreport i     
-            WHERE i.uid = ?
+        const [evbag] = await connection.execute(`
+            SELECT *
+            FROM evidentbag 
+            WHERE event_report_id = ?
         `, [uid]);
 
-
         await connection.end();
-
-
-
-        if (incident.length === 0) {
+        if (incident.length === 0) 
+        {
             return res.status(404).send('Incident not found');
+        }else if(evbag.length === 0)
+        {
+            return res.status(404).send('evidentbag not found');
         }
 
-        const data = incident[0];
+        var evident = []
+        const evidentList = evbag.map(row => row.evident).join(',');
+
+        const allValues = evbag.flatMap(row => {
+            try {
+              const arr = JSON.parse(row.return_pks);
+
+              if (Array.isArray(arr)) {
+                return arr;
+              } else {
+                return [];
+              }
+            } catch {
+              return []; // if JSON.parse fails
+            }
+          });
+          // 2. Remove duplicates (optional)
+          const uniqueValues = [...new Set(allValues)];
+
+          // 3. Join with commas
+          const return_psk = uniqueValues.join(', ');
+
+
+        var data = incident[0];
+        data["evidentList"] = evidentList;
+        data["evg_count"] = evbag.length;
+        data["return_psk"] = return_psk;
 
         let header = await fs.readFile('./views/header.html', 'utf8');
         let table = await fs.readFile('./views/body.html', 'utf8');
@@ -61,6 +87,42 @@ app.get('/sumary_checkin', async (req, res) => {
         console.error(error);
         res.status(500).send('Database error');
     }
+});
+
+app.post('/submit-evidence', (req, res) => {
+    const {
+        report_number,
+        location,
+        report_officer,
+        create_date,
+        evidentList,
+        evg_count,
+        purpose,
+        return_psk,
+        document_no
+    } = req.body;
+
+    const sql = `
+        INSERT INTO evidence (
+            report_number, location, report_officer, create_date,
+            evidentList, evg_count, purpose, return_psk, document_no
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    db.query(
+        sql,
+        [report_number, location, report_officer, create_date,
+         evidentList, evg_count, purpose, return_psk, document_no],
+        (err, result) => {
+            if (err) {
+                console.error('Error inserting data:', err);
+                return res.status(500).send('Database error');
+            }
+            console.log('Data inserted:', result.insertId);
+            res.redirect('/thankyou.html'); // Redirect to another page
+        }
+    );
 });
 
 app.listen(port, () => {
